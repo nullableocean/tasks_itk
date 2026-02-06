@@ -49,9 +49,7 @@ func (s *stack) Pop() int {
 	}
 
 	val := s.lifo[l-1]
-
 	s.lifo = s.lifo[:l-1]
-	clear(s.lifo[len(s.lifo):l])
 
 	return val
 }

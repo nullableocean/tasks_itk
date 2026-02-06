@@ -33,11 +33,11 @@ type Circle struct {
 	r float64
 }
 
-func (c Circle) Area() float64 {
+func (c *Circle) Area() float64 {
 	return math.Pi * math.Pow(c.r, 2)
 }
 
-func (c Circle) Perimeter() float64 {
+func (c *Circle) Perimeter() float64 {
 	return math.Pi * c.r * 2
 }
 
@@ -45,10 +45,10 @@ type Rectangle struct {
 	w, h float64
 }
 
-func (rec Rectangle) Area() float64 {
+func (rec *Rectangle) Area() float64 {
 	return rec.w * rec.h
 }
 
-func (rec Rectangle) Perimeter() float64 {
+func (rec *Rectangle) Perimeter() float64 {
 	return (rec.w + rec.h) * 2
 }

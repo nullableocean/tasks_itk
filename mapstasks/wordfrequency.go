@@ -58,9 +58,9 @@ func PrintWordFrequency(freqMap map[string]int) {
 		}
 
 		if a.count > b.count {
-			return 1
-		} else {
 			return -1
+		} else {
+			return 1
 		}
 	})
 

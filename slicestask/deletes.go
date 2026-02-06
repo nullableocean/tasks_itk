@@ -33,52 +33,6 @@ package slicestask
 2. `RemoveIf(s []T, predicate func(T) bool) []T` — удаление по условию.
 package main
 
-```
-// RemoveUnordered удаляет элемент по индексу без сохранения порядка.
-// Если индекс выходит за границы слайса, возвращает исходный слайс.
-func RemoveUnordered[T any](s []T, i int) []T {
-	// реализовать
-	return s
-}
-
-// RemoveOrdered удаляет элемент по индексу с сохранением порядка.
-// Если индекс выходит за границы слайса, возвращает исходный слайс.
-func RemoveOrdered[T any](s []T, i int) []T {
-	// реализовать
-	return s
-}
-
-// RemoveAllByValue удаляет все вхождения указанного значения.
-func RemoveAllByValue[T comparable](s []T, value T) []T {
-	// реализовать
-	return s
-}
-
-// RemoveDuplicates оставляет только уникальные элементы (сохраняет порядок).
-func RemoveDuplicates[T comparable](s []T) []T {
-	// реализовать
-	return s
-}
-
-// RemoveIf удаляет элементы, удовлетворяющие условию predicate.
-func RemoveIf[T any](s []T, predicate func(T) bool) []T {
-	// реализовать
-	return s
-}
-
-// RemoveOrderedWithNil удаляет элемент по индексу (для слайса указателей),
-// обнуляя удаляемый элемент для предотвращения утечек памяти.
-func RemoveOrderedWithNil[T any](s []*T, i int) []*T {
-	//реализовать
-	return s
-}
-
-// ShrinkCapacity сокращает вместимость слайса, если она превышает
-// удвоенную длину после удаления элементов.
-func ShrinkCapacity[T any](s []T) []T {
-	//реализовать
-	return s
-}
 
 
 */
@@ -91,8 +45,6 @@ func RemoveUnordered[T any](s []T, i int) []T {
 	}
 
 	newS := append(s[:i], s[i+1:]...)
-	clear(newS[len(newS):len(s)])
-
 	return newS
 }
 

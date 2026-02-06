@@ -33,16 +33,16 @@ func func5() *MyStruct {
 
 func main() {
 	ms1 := func1()
-	fmt.Println(ms1.MyInt) // 1
+	fmt.Println(ms1.MyInt) // создали структуру с MyInt 1
 
 	ms2 := func2()
-	fmt.Println(ms2.MyInt) // 0
+	fmt.Println(ms2.MyInt) // MyInt не инициализировался с базовым значением (для int 0)
 
 	func3(ms2)
-	fmt.Println(ms2.MyInt) // 333
+	fmt.Println(ms2.MyInt) // передали указатель, изменили значение в структуре
 
 	func4(ms1)
-	fmt.Println(ms1.MyInt) // 1
+	fmt.Println(ms1.MyInt) // в функцию копировалась структура, изменили только копию внутри функции
 
 	ms5 := func5()
 	fmt.Println(ms5.MyInt) // panic nil pointer
@@ -91,7 +91,7 @@ func main() {
 	addToSlice1(slice)
 	fmt.Println(slice, len(slice), cap(slice)) // ["0", "1", "2", "one"], 4, 5
 	addToSlice2(slice)
-	fmt.Println(slice, len(slice), cap(slice)) // ["0", "1", "2", "3"], 4, 5
+	fmt.Println(slice, len(slice), cap(slice)) // ["0", "1", "2", "one"], 4, 5
 }
 
 func addToSlice1(slice []string) {
@@ -295,15 +295,15 @@ package main
 
 import "fmt"
 
-func test(testSlice []string) {
-	testSlice = append(testSlice, "Пока")
+func test(testSlice []string) []string {
+	return append(testSlice, "Пока")
 }
 func main() {
 	testSlice := make([]string, 0, 3)
 	testSlice = append(testSlice, "Привет")
 	testSlice = append(testSlice, "Привет")
-	test(testSlice) // для фикса нужно возвращать слайс с новым значением
-	fmt.Println(testSlice) // [Привет, привет]
+	testSlice = test(testSlice) // добавили возврат слайса с новым значением из функции
+	fmt.Println(testSlice) // [Привет, привет, пока]
 }
 ```
 ----

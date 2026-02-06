@@ -71,13 +71,13 @@ type Sberbank struct {
 	paymentProvider
 }
 
-func NewSberbank(key ApiKey) Sberbank {
-	return Sberbank{
+func NewSberbank(key ApiKey) *Sberbank {
+	return &Sberbank{
 		paymentProvider: newProvider(key),
 	}
 }
 
-func (p Sberbank) ProcessPayment(amount float64) error {
+func (p *Sberbank) ProcessPayment(amount float64) error {
 	if err := p.validateAmount(amount); err != nil {
 		return err
 	}
@@ -93,13 +93,13 @@ type Tbank struct {
 	paymentProvider
 }
 
-func NewTbank(key ApiKey) Tbank {
-	return Tbank{
+func NewTbank(key ApiKey) *Tbank {
+	return &Tbank{
 		paymentProvider: newProvider(key),
 	}
 }
 
-func (p Tbank) ProcessPayment(amount float64) error {
+func (p *Tbank) ProcessPayment(amount float64) error {
 	if err := p.validateAmount(amount); err != nil {
 		return err
 	}
@@ -115,13 +115,13 @@ type Alfabank struct {
 	paymentProvider
 }
 
-func NewAlfabank(key ApiKey) Alfabank {
-	return Alfabank{
+func NewAlfabank(key ApiKey) *Alfabank {
+	return &Alfabank{
 		paymentProvider: newProvider(key),
 	}
 }
 
-func (p Alfabank) ProcessPayment(amount float64) error {
+func (p *Alfabank) ProcessPayment(amount float64) error {
 	if err := p.validateAmount(amount); err != nil {
 		return err
 	}

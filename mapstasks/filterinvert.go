@@ -1,7 +1,6 @@
 package mapstasks
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -50,7 +49,7 @@ func InvertMap(m map[string]int) (map[int]string, error) {
 
 	for k, v := range m {
 		if _, ex := invertMap[v]; ex {
-			return invertMap, errors.New(fmt.Sprintf("not unique value: %s", v))
+			return invertMap, fmt.Errorf("not unique value: %v", v)
 		}
 
 		invertMap[v] = k

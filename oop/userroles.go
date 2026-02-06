@@ -36,97 +36,97 @@ package oop
 
 type User interface {
 	GetUsername() string
-	HasPermission(permission string) bool
-	GetRole() string
+	HasPermission(Permission) bool
+	GetRole() Role
 }
 
-type role string
+type Role string
 
 const (
-	basicRole     role = "basic_user"
-	moderatorRole role = "moderator"
-	adminRole     role = "admin"
+	BasicRole     Role = "basic_user"
+	ModeratorRole Role = "moderator"
+	AdminRole     Role = "admin"
 )
 
-type perm string
+type Permission string
 
 const (
-	read    perm = "read"
-	edit    perm = "edit"
-	banUser perm = "ban_user"
-	delete  perm = "delete"
-	manage  perm = "manage_roles"
+	Read    Permission = "read"
+	Edit    Permission = "edit"
+	BanUser Permission = "ban_user"
+	Delete  Permission = "delete"
+	Manage  Permission = "manage_roles"
 )
 
 type BasicUser struct {
-	Username string
+	username string
 }
 
-func NewBasicUser(username string) BasicUser {
-	return BasicUser{
-		Username: username,
+func NewBasicUser(username string) *BasicUser {
+	return &BasicUser{
+		username: username,
 	}
 }
 
-func (u BasicUser) GetUsername() string {
-	return u.Username
+func (u *BasicUser) GetUsername() string {
+	return u.username
 }
 
-func (u BasicUser) HasPermission(permission string) bool {
-	switch perm(permission) {
-	case read:
+func (u *BasicUser) HasPermission(perm Permission) bool {
+	switch perm {
+	case Read:
 		return true
 	}
 
 	return false
 }
 
-func (u BasicUser) GetRole() string {
-	return string(basicRole)
+func (u *BasicUser) GetRole() Role {
+	return BasicRole
 }
 
 type Moderator struct {
-	BasicUser
+	*BasicUser
 }
 
-func NewModerator(username string) Moderator {
-	return Moderator{
+func NewModerator(username string) *Moderator {
+	return &Moderator{
 		BasicUser: NewBasicUser(username),
 	}
 }
 
-func (u Moderator) HasPermission(permission string) bool {
-	switch perm(permission) {
-	case edit, banUser:
+func (u *Moderator) HasPermission(perm Permission) bool {
+	switch perm {
+	case Edit, BanUser:
 		return true
 	}
 
-	return u.BasicUser.HasPermission(permission)
+	return u.BasicUser.HasPermission(perm)
 }
 
-func (u Moderator) GetRole() string {
-	return string(moderatorRole)
+func (u *Moderator) GetRole() Role {
+	return ModeratorRole
 }
 
 type Admin struct {
-	Moderator
+	*Moderator
 }
 
-func NewAdmin(username string) Admin {
-	return Admin{
+func NewAdmin(username string) *Admin {
+	return &Admin{
 		Moderator: NewModerator(username),
 	}
 }
 
-func (u Admin) HasPermission(permission string) bool {
-	switch perm(permission) {
-	case delete, manage:
+func (u *Admin) HasPermission(perm Permission) bool {
+	switch perm {
+	case Delete, Manage:
 		return true
 	}
 
-	return u.Moderator.HasPermission(permission)
+	return u.Moderator.HasPermission(perm)
 }
 
-func (u Admin) GetRole() string {
-	return string(adminRole)
+func (u *Admin) GetRole() Role {
+	return AdminRole
 }

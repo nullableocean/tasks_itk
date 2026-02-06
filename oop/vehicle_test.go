@@ -39,6 +39,23 @@ func TestEngineWork(t *testing.T) {
 	if !errors.Is(err, expectedErr) {
 		t.Fatalf("repeat stop engine. got error: %v, expected: %v", err, expectedErr)
 	}
+
+	// TODO: elcar test
+	elcar := NewElectricCar("elcar")
+	elcar.SetBatteryLevel(55)
+	err = elcar.StartEngine()
+
+	if err != nil {
+		t.Fatalf("start engine electric car. got error: %v, expected: nil", err)
+	}
+
+	elcar.SetBatteryLevel(3)
+	err = elcar.StartEngine()
+	expectedErr = ErrLowBattery
+
+	if !errors.Is(err, expectedErr) {
+		t.Fatalf("start engine electric car. got: %v, expected: %v", err, expectedErr)
+	}
 }
 
 func TestVehiclePolymorph(t *testing.T) {
