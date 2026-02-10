@@ -28,7 +28,7 @@ import (
 */
 
 func FilterByValue(m map[int]string, allowedValues []string) map[int]string {
-	newMap := make(map[int]string, len(allowedValues))
+	newMap := make(map[int]string, len(m))
 	allowedSet := make(map[string]struct{}, len(allowedValues))
 
 	for _, v := range allowedValues {

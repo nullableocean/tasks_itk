@@ -123,7 +123,7 @@ func RemoveOrderedWithNil[T any](s []*T, i int) []*T {
 // ShrinkCapacity сокращает вместимость слайса, если она превышает
 // удвоенную длину после удаления элементов.
 func ShrinkCapacity[T any](s []T) []T {
-	if cap(s) < len(s)*2 {
+	if len(s)*2 >= cap(s) {
 		return s
 	}
 

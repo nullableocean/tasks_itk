@@ -31,6 +31,7 @@ func WordFrequency(text string) map[string]int {
 	words := strings.Fields(text)
 
 	for _, w := range words {
+		w = strings.ToLower(w)
 		if count, ex := m[w]; ex {
 			m[w] = count + 1
 		} else {
