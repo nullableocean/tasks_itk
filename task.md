@@ -72,7 +72,7 @@ func case1() {
         var retVal error
 
         defer func() {
-            retVal = errors.New("Extra error") // вернем с именнованым возвратом из функций
+            retVal = errors.New("Extra error") // возвращаемое значение не изменится
         }()
 
         if isError {
@@ -111,7 +111,7 @@ func case1() {
 func case2() {
     helperWithDefer := func(isError bool) (retVal error) {
         defer func() {
-            retVal = errors.New("Extra error")
+            retVal = errors.New("Extra error") // возвращаемое значение изменяется, тк именованный возврат
         }()
 
         if isError {
@@ -207,8 +207,19 @@ ERRORS
 
 
 ```
+package main
+
+import "fmt"
+
 func handle() error {
    return fmt.Errorf("error with fmt")
+}
+
+func main() {
+    err := handle()
+    if err != nil {
+        fmt.Println(handle())
+    }
 }
 ```
 
@@ -220,61 +231,56 @@ func handle() error {
 1. Простую ошибку через `errors.New()`.  
 2. Ошибку с форматированием через `fmt.Errorf()`.  
 3. Структуру `MyError`, реализующую интерфейс `error`.  
-  ```
-  var ErrTimeStarted = errors.New("time started")
-  var ErrTimeStoped = fmt.Errorf("time stoped")
+
   
-  type MyError struct {
-	  Msg string
-  }
-  
-  func (e MyError) Error() string {
-	  return e.Msg
-  }
-  ```
 ## Требования  
 1. **Простая ошибка**:  
    - Создайте функцию `SimpleError() error`, возвращающую ошибку с текстом "простая ошибка".  
 
-```
-func SimpleError() error {
-	return errors.New("простая ошибка")
-}
-```
 1. **Форматированная ошибка**:  
    - Создайте функцию `FormattedError(age int) error`, которая возвращает ошибку в формате: "ошибка: возраст %d недопустим".  
    - Добавьте оборачивание ошибки с `%w`.  
-
-```
-	var ErrUnacceptableAge = errors.New("некорректный возраст")
-
-func FormattedError(age int) error {
-	return fmt.Errorf("%w: возраст %d недопустим", ErrUnacceptableAge, age)
-}
-
-```
 
 1. **Структура `MyError`**:  
    - Реализуйте метод `Error() string`.  
    - Добавьте поле `Code int` для кода ошибки.  
    - Создайте функцию `StructError() error`, возвращающую `MyError{Code: 404, Msg: "не найдено"}`.
    - 
-```
-  type MyError struct {
-	  Msg string
-	  Code int
-  }
-  
-  func (e MyError) Error() string {
-	  return e.Msg
-  }
-  
-  func StructError() error {
-	  return MyError{
-		  Code: 404,
-		  Msg: "не найдено",
-	  }
-  }
+  ```go
+    package main
+
+    import (
+        "errors"
+        "fmt"
+    )
+
+    var ErrTimeStarted = errors.New("time started")
+    var ErrTimeStoped = fmt.Errorf("time stoped")
+    var ErrUnacceptableAge = errors.New("некорректный возраст")
+
+    func SimpleError() error {
+        return errors.New("простая ошибка")
+    }
+
+    func FormattedError(age int) error {
+        return fmt.Errorf("%w: возраст %d недопустим", ErrUnacceptableAge, age)
+    }
+
+    type MyError struct {
+        Msg string
+        Code int
+    }
+
+    func (e MyError) Error() string {
+        return e.Msg
+    }
+
+    func StructError() error {
+        return MyError{
+            Code: 404,
+            Msg: "не найдено",
+        }
+    }
 ```
 
 # Анализ цепочек ошибок в Go error.Is
@@ -307,35 +313,35 @@ func FormattedError(age int) error {
 3. Реализуйте логику анализа ошибок в ProcessError.
 
 
-```
-var (
-   ErrNotFound   = errors.New("ресурс не найден")
-   TimeoutError = errors.New("таймаут операции")
-)
+```go
+    var (
+    ErrNotFound   = errors.New("ресурс не найден")
+    TimeoutError = errors.New("таймаут операции")
+    )
 
-func SimulateRequest() error {
-	n := rand.Intn(100)
-	
-	if n > 50 {
-		return fmt.Errorf("запрос не выполнен: %w", TimeoutError)
-	}
-	
-	if n > 20 {
-		return fmt.Errorf("ошибка: %w", ErrNotFound)
-	}
-	
-	return fmt.Errorf("неизвестная ошибка")
-}
+    func SimulateRequest() error {
+        n := rand.Intn(100)
+        
+        if n > 50 {
+            return fmt.Errorf("запрос не выполнен: %w", TimeoutError)
+        }
+        
+        if n > 20 {
+            return fmt.Errorf("ошибка: %w", ErrNotFound)
+        }
+        
+        return fmt.Errorf("неизвестная ошибка")
+    }
 
-func ProcessError(err error) {
-	if errors.Is(err, TimeoutError) {
-		fmt.Println("Требуется повторная попытка")
-	} else if errors.Is(err, ErrNotFound) {
-		fmt.Println("Ресурс не найден")
-	} else {
-		fmt.Println("Неизвестная ошибка")
-	}
-}
+    func ProcessError(err error) {
+        if errors.Is(err, TimeoutError) {
+            fmt.Println("Требуется повторная попытка")
+        } else if errors.Is(err, ErrNotFound) {
+            fmt.Println("Ресурс не найден")
+        } else {
+            fmt.Println("Неизвестная ошибка")
+        }
+    }
 ```
 -------------------------------------------------------
 
