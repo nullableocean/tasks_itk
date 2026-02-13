@@ -103,6 +103,7 @@ func (pm *PluginManager) GetPlugin(name string) (Plugin, error) {
 		return nil, ErrPluginNotFound
 	}
 
+	// можно вызывать тут once.do для каждого плагина
 	// плагин и ошибка кешируются внутри pluginEntry в initFn --> в once
 	return entry.initFn()
 }

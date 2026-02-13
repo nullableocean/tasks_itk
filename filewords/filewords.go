@@ -59,11 +59,13 @@ func countJob(path string) <-chan WordCountResult {
 	return out
 }
 
+// TODO semaphore limit open files
 func countWordInFile(path string) (int, error) {
 	f, err := os.Open(path)
 	if err != nil {
-		return 0, err
+		return 0, err //TODO what err?
 	}
+	defer f.Close()
 
 	count := 0
 

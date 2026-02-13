@@ -39,11 +39,11 @@ func NewDatabase() *Database {
 	}
 }
 
-func (db *Database) GetConnection() *Connect {
+func (db *Database) GetConnection() (*Connect, error) {
 	db.once.Do(func() {
 		newConnect := Connect{Id: 1}
 		db.conn = &newConnect
 	})
 
-	return db.conn
+	return db.conn, nil
 }

@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func logRawMetric(in <-chan ServerMetric) <-chan ServerMetric {
-	o := make(chan ServerMetric)
+func logRawMetric(in <-chan *ServerMetric) <-chan *ServerMetric {
+	o := make(chan *ServerMetric)
 
 	go func() {
 		defer close(o)
@@ -21,14 +21,14 @@ func logRawMetric(in <-chan ServerMetric) <-chan ServerMetric {
 }
 
 func Test_Transformer(t *testing.T) {
-	rawMetricsCh := make(chan ServerMetric)
+	rawMetricsCh := make(chan *ServerMetric)
 
 	go func() {
 		defer close(rawMetricsCh)
 
 		for i := range 10 {
 			b := 1 << (20 + i + 1)
-			testM := ServerMetric{
+			testM := &ServerMetric{
 				Name:  fmt.Sprintf("node_%d_memusage", i),
 				Value: float64(b),
 			}
@@ -36,7 +36,7 @@ func Test_Transformer(t *testing.T) {
 			rawMetricsCh <- testM
 		}
 	}()
-	metricTrans := MetricsPipeline{}
+	metricTrans := &MetricsPipeline{}
 
 	metricTrans.Add(logRawMetric)
 	metricTrans.Add(TransformToMB)

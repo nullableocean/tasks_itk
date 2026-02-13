@@ -8,8 +8,8 @@ import (
 func TestDatabase_GetConnection(t *testing.T) {
 	db := NewDatabase()
 
-	conn1 := db.GetConnection()
-	conn2 := db.GetConnection()
+	conn1, _ := db.GetConnection()
+	conn2, _ := db.GetConnection()
 
 	if conn1 != conn2 {
 		t.Error("expected ptr on single connection")
@@ -26,7 +26,7 @@ func TestDatabase_ConcurrentAccess(t *testing.T) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			conn := db.GetConnection()
+			conn, _ := db.GetConnection()
 			connections <- conn
 		}()
 	}

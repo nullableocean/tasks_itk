@@ -37,6 +37,7 @@ type Replica struct {
 	id int
 }
 
+// TODO create INPUT CANNEL FOR replica, copy to data to every input
 func Write(in chan int, replics []Replica) {
 	repChs := make([]chan int, 0, len(replics))
 

@@ -9,8 +9,8 @@ var (
 	_mb float64 = 1 << 20 // 1024b * 1024b
 )
 
-func TransformToMB(mch <-chan ServerMetric) <-chan ServerMetric {
-	out := make(chan ServerMetric)
+func TransformToMB(mch <-chan *ServerMetric) <-chan *ServerMetric {
+	out := make(chan *ServerMetric)
 
 	go func() {
 		for m := range mch {
@@ -24,7 +24,7 @@ func TransformToMB(mch <-chan ServerMetric) <-chan ServerMetric {
 	return out
 }
 
-type MetricTransformFunc func(in <-chan ServerMetric) <-chan ServerMetric
+type MetricTransformFunc func(in <-chan *ServerMetric) <-chan *ServerMetric
 
 type MetricsPipeline struct {
 	transfn []MetricTransformFunc
@@ -34,7 +34,7 @@ func (t *MetricsPipeline) Add(tfn MetricTransformFunc) {
 	t.transfn = append(t.transfn, tfn)
 }
 
-func (t *MetricsPipeline) StartTransform(in <-chan ServerMetric) <-chan ServerMetric {
+func (t *MetricsPipeline) StartTransform(in <-chan *ServerMetric) <-chan *ServerMetric {
 	if len(t.transfn) == 0 { // или возвращать ошибку вторым значением
 		return in
 	}
