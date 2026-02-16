@@ -2,7 +2,7 @@ package user
 
 import (
 	"context"
-	userpb "main/api/user"
+	"main/api/userpb"
 
 	"time"
 

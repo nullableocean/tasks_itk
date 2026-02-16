@@ -4,7 +4,7 @@
 // 	protoc        v6.30.2
 // source: user.proto
 
-package user
+package userpb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -122,7 +122,7 @@ type UserInfo struct {
 	Id            *UserId                `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
-	Role          Role                   `protobuf:"varint,4,opt,name=role,proto3,enum=main.api.user.Role" json:"role,omitempty"`
+	Role          Role                   `protobuf:"varint,4,opt,name=role,proto3,enum=main.api.userpb.Role" json:"role,omitempty"`
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -207,7 +207,7 @@ type CreateUserRequest struct {
 	Email           string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
 	Password        string                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"`
 	PasswordConfirm string                 `protobuf:"bytes,4,opt,name=password_confirm,json=passwordConfirm,proto3" json:"password_confirm,omitempty"`
-	Role            Role                   `protobuf:"varint,5,opt,name=role,proto3,enum=main.api.user.Role" json:"role,omitempty"`
+	Role            Role                   `protobuf:"varint,5,opt,name=role,proto3,enum=main.api.userpb.Role" json:"role,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -342,38 +342,38 @@ var File_user_proto protoreflect.FileDescriptor
 const file_user_proto_rawDesc = "" +
 	"\n" +
 	"\n" +
-	"user.proto\x12\rmain.api.user\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\x18\n" +
+	"user.proto\x12\x0fmain.api.userpb\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1egoogle/protobuf/wrappers.proto\"\x18\n" +
 	"\x06UserId\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id\"\xfa\x01\n" +
-	"\bUserInfo\x12%\n" +
-	"\x02id\x18\x01 \x01(\v2\x15.main.api.user.UserIdR\x02id\x12\x12\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\"\xfe\x01\n" +
+	"\bUserInfo\x12'\n" +
+	"\x02id\x18\x01 \x01(\v2\x17.main.api.userpb.UserIdR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
-	"\x05email\x18\x03 \x01(\tR\x05email\x12'\n" +
-	"\x04role\x18\x04 \x01(\x0e2\x13.main.api.user.RoleR\x04role\x129\n" +
+	"\x05email\x18\x03 \x01(\tR\x05email\x12)\n" +
+	"\x04role\x18\x04 \x01(\x0e2\x15.main.api.userpb.RoleR\x04role\x129\n" +
 	"\n" +
 	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
 	"\n" +
-	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\xad\x01\n" +
+	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\"\xaf\x01\n" +
 	"\x11CreateUserRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
 	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
 	"\bpassword\x18\x03 \x01(\tR\bpassword\x12)\n" +
-	"\x10password_confirm\x18\x04 \x01(\tR\x0fpasswordConfirm\x12'\n" +
-	"\x04role\x18\x05 \x01(\x0e2\x13.main.api.user.RoleR\x04role\"\xa0\x01\n" +
-	"\x11UpdateUserRequest\x12%\n" +
-	"\x02id\x18\x01 \x01(\v2\x15.main.api.user.UserIdR\x02id\x120\n" +
+	"\x10password_confirm\x18\x04 \x01(\tR\x0fpasswordConfirm\x12)\n" +
+	"\x04role\x18\x05 \x01(\x0e2\x15.main.api.userpb.RoleR\x04role\"\xa2\x01\n" +
+	"\x11UpdateUserRequest\x12'\n" +
+	"\x02id\x18\x01 \x01(\v2\x17.main.api.userpb.UserIdR\x02id\x120\n" +
 	"\x04name\x18\x02 \x01(\v2\x1c.google.protobuf.StringValueR\x04name\x122\n" +
 	"\x05email\x18\x03 \x01(\v2\x1c.google.protobuf.StringValueR\x05email*;\n" +
 	"\x04Role\x12\x14\n" +
 	"\x10ROLE_UNSPECIFIED\x10\x00\x12\r\n" +
 	"\tROLE_USER\x10\x01\x12\x0e\n" +
 	"\n" +
-	"ROLE_ADMIN\x10\x022\xff\x01\n" +
-	"\x04User\x12A\n" +
-	"\x06Create\x12 .main.api.user.CreateUserRequest\x1a\x15.main.api.user.UserId\x12B\n" +
-	"\x06Update\x12 .main.api.user.UpdateUserRequest\x1a\x16.google.protobuf.Empty\x125\n" +
-	"\x03Get\x12\x15.main.api.user.UserId\x1a\x17.main.api.user.UserInfo\x129\n" +
-	"\x06Delete\x12\x15.main.api.user.UserId\x1a\x16.google.protobuf.Empty\"\x00B\x0fZ\rmain/api/userb\x06proto3"
+	"ROLE_ADMIN\x10\x022\x8b\x02\n" +
+	"\x04User\x12E\n" +
+	"\x06Create\x12\".main.api.userpb.CreateUserRequest\x1a\x17.main.api.userpb.UserId\x12D\n" +
+	"\x06Update\x12\".main.api.userpb.UpdateUserRequest\x1a\x16.google.protobuf.Empty\x129\n" +
+	"\x03Get\x12\x17.main.api.userpb.UserId\x1a\x19.main.api.userpb.UserInfo\x12;\n" +
+	"\x06Delete\x12\x17.main.api.userpb.UserId\x1a\x16.google.protobuf.Empty\"\x00B\x11Z\x0fmain/api/userpbb\x06proto3"
 
 var (
 	file_user_proto_rawDescOnce sync.Once
@@ -390,32 +390,32 @@ func file_user_proto_rawDescGZIP() []byte {
 var file_user_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_user_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_user_proto_goTypes = []any{
-	(Role)(0),                      // 0: main.api.user.Role
-	(*UserId)(nil),                 // 1: main.api.user.UserId
-	(*UserInfo)(nil),               // 2: main.api.user.UserInfo
-	(*CreateUserRequest)(nil),      // 3: main.api.user.CreateUserRequest
-	(*UpdateUserRequest)(nil),      // 4: main.api.user.UpdateUserRequest
+	(Role)(0),                      // 0: main.api.userpb.Role
+	(*UserId)(nil),                 // 1: main.api.userpb.UserId
+	(*UserInfo)(nil),               // 2: main.api.userpb.UserInfo
+	(*CreateUserRequest)(nil),      // 3: main.api.userpb.CreateUserRequest
+	(*UpdateUserRequest)(nil),      // 4: main.api.userpb.UpdateUserRequest
 	(*timestamppb.Timestamp)(nil),  // 5: google.protobuf.Timestamp
 	(*wrapperspb.StringValue)(nil), // 6: google.protobuf.StringValue
 	(*emptypb.Empty)(nil),          // 7: google.protobuf.Empty
 }
 var file_user_proto_depIdxs = []int32{
-	1,  // 0: main.api.user.UserInfo.id:type_name -> main.api.user.UserId
-	0,  // 1: main.api.user.UserInfo.role:type_name -> main.api.user.Role
-	5,  // 2: main.api.user.UserInfo.created_at:type_name -> google.protobuf.Timestamp
-	5,  // 3: main.api.user.UserInfo.updated_at:type_name -> google.protobuf.Timestamp
-	0,  // 4: main.api.user.CreateUserRequest.role:type_name -> main.api.user.Role
-	1,  // 5: main.api.user.UpdateUserRequest.id:type_name -> main.api.user.UserId
-	6,  // 6: main.api.user.UpdateUserRequest.name:type_name -> google.protobuf.StringValue
-	6,  // 7: main.api.user.UpdateUserRequest.email:type_name -> google.protobuf.StringValue
-	3,  // 8: main.api.user.User.Create:input_type -> main.api.user.CreateUserRequest
-	4,  // 9: main.api.user.User.Update:input_type -> main.api.user.UpdateUserRequest
-	1,  // 10: main.api.user.User.Get:input_type -> main.api.user.UserId
-	1,  // 11: main.api.user.User.Delete:input_type -> main.api.user.UserId
-	1,  // 12: main.api.user.User.Create:output_type -> main.api.user.UserId
-	7,  // 13: main.api.user.User.Update:output_type -> google.protobuf.Empty
-	2,  // 14: main.api.user.User.Get:output_type -> main.api.user.UserInfo
-	7,  // 15: main.api.user.User.Delete:output_type -> google.protobuf.Empty
+	1,  // 0: main.api.userpb.UserInfo.id:type_name -> main.api.userpb.UserId
+	0,  // 1: main.api.userpb.UserInfo.role:type_name -> main.api.userpb.Role
+	5,  // 2: main.api.userpb.UserInfo.created_at:type_name -> google.protobuf.Timestamp
+	5,  // 3: main.api.userpb.UserInfo.updated_at:type_name -> google.protobuf.Timestamp
+	0,  // 4: main.api.userpb.CreateUserRequest.role:type_name -> main.api.userpb.Role
+	1,  // 5: main.api.userpb.UpdateUserRequest.id:type_name -> main.api.userpb.UserId
+	6,  // 6: main.api.userpb.UpdateUserRequest.name:type_name -> google.protobuf.StringValue
+	6,  // 7: main.api.userpb.UpdateUserRequest.email:type_name -> google.protobuf.StringValue
+	3,  // 8: main.api.userpb.User.Create:input_type -> main.api.userpb.CreateUserRequest
+	4,  // 9: main.api.userpb.User.Update:input_type -> main.api.userpb.UpdateUserRequest
+	1,  // 10: main.api.userpb.User.Get:input_type -> main.api.userpb.UserId
+	1,  // 11: main.api.userpb.User.Delete:input_type -> main.api.userpb.UserId
+	1,  // 12: main.api.userpb.User.Create:output_type -> main.api.userpb.UserId
+	7,  // 13: main.api.userpb.User.Update:output_type -> google.protobuf.Empty
+	2,  // 14: main.api.userpb.User.Get:output_type -> main.api.userpb.UserInfo
+	7,  // 15: main.api.userpb.User.Delete:output_type -> google.protobuf.Empty
 	12, // [12:16] is the sub-list for method output_type
 	8,  // [8:12] is the sub-list for method input_type
 	8,  // [8:8] is the sub-list for extension type_name

@@ -1,7 +1,10 @@
 package main
 
 import (
-	userpb "main/api/user"
+	"fmt"
+	"main/api/chatpb"
+	"main/api/userpb"
+	"main/server/chat"
 	"main/server/user"
 	"net"
 
@@ -14,11 +17,15 @@ func main() {
 	userServ := user.NewUserServer()
 	userpb.RegisterUserServer(server, userServ)
 
+	chatServ := chat.NewChatServer()
+	chatpb.RegisterChatServer(server, chatServ)
+
 	l, err := net.Listen("tcp", ":8085")
 	if err != nil {
 		panic(err)
 	}
 
+	fmt.Println("server listen///::::")
 	err = server.Serve(l)
 	if err != nil {
 		panic(err)

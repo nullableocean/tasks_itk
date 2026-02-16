@@ -4,7 +4,7 @@
 // 	protoc        v6.30.2
 // source: chat.proto
 
-package chat
+package chatpb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -113,9 +113,10 @@ func (x *CreateChatRequest) GetUsernames() []*Username {
 
 type ChatMessage struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	From          string                 `protobuf:"bytes,1,opt,name=from,proto3" json:"from,omitempty"`
-	Text          string                 `protobuf:"bytes,2,opt,name=text,proto3" json:"text,omitempty"`
-	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
+	Id            *ChatId                `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	From          string                 `protobuf:"bytes,2,opt,name=from,proto3" json:"from,omitempty"`
+	Text          string                 `protobuf:"bytes,3,opt,name=text,proto3" json:"text,omitempty"`
+	Timestamp     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -148,6 +149,13 @@ func (x *ChatMessage) ProtoReflect() protoreflect.Message {
 // Deprecated: Use ChatMessage.ProtoReflect.Descriptor instead.
 func (*ChatMessage) Descriptor() ([]byte, []int) {
 	return file_chat_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ChatMessage) GetId() *ChatId {
+	if x != nil {
+		return x.Id
+	}
+	return nil
 }
 
 func (x *ChatMessage) GetFrom() string {
@@ -264,23 +272,25 @@ var File_chat_proto protoreflect.FileDescriptor
 const file_chat_proto_rawDesc = "" +
 	"\n" +
 	"\n" +
-	"chat.proto\x12\rmain.api.chat\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\";\n" +
-	"\x12CreateChatResponse\x12%\n" +
-	"\x02id\x18\x01 \x01(\v2\x15.main.api.chat.ChatIdR\x02id\"J\n" +
-	"\x11CreateChatRequest\x125\n" +
-	"\tusernames\x18\x01 \x03(\v2\x17.main.api.chat.UsernameR\tusernames\"o\n" +
-	"\vChatMessage\x12\x12\n" +
-	"\x04from\x18\x01 \x01(\tR\x04from\x12\x12\n" +
-	"\x04text\x18\x02 \x01(\tR\x04text\x128\n" +
-	"\ttimestamp\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"&\n" +
+	"chat.proto\x12\x0fmain.api.chatpb\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"=\n" +
+	"\x12CreateChatResponse\x12'\n" +
+	"\x02id\x18\x01 \x01(\v2\x17.main.api.chatpb.ChatIdR\x02id\"L\n" +
+	"\x11CreateChatRequest\x127\n" +
+	"\tusernames\x18\x01 \x03(\v2\x19.main.api.chatpb.UsernameR\tusernames\"\x98\x01\n" +
+	"\vChatMessage\x12'\n" +
+	"\x02id\x18\x01 \x01(\v2\x17.main.api.chatpb.ChatIdR\x02id\x12\x12\n" +
+	"\x04from\x18\x02 \x01(\tR\x04from\x12\x12\n" +
+	"\x04text\x18\x03 \x01(\tR\x04text\x128\n" +
+	"\ttimestamp\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\ttimestamp\"&\n" +
 	"\bUsername\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\"\x18\n" +
 	"\x06ChatId\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\x03R\x02id2\xd1\x01\n" +
-	"\x04Chat\x12M\n" +
-	"\x06Create\x12 .main.api.chat.CreateChatRequest\x1a!.main.api.chat.CreateChatResponse\x127\n" +
-	"\x06Delete\x12\x15.main.api.chat.ChatId\x1a\x16.google.protobuf.Empty\x12A\n" +
-	"\vSendMessage\x12\x1a.main.api.chat.ChatMessage\x1a\x16.google.protobuf.EmptyB\x0fZ\rmain/api/chatb\x06proto3"
+	"\x02id\x18\x01 \x01(\x03R\x02id2\xa4\x02\n" +
+	"\x04Chat\x12Q\n" +
+	"\x06Create\x12\".main.api.chatpb.CreateChatRequest\x1a#.main.api.chatpb.CreateChatResponse\x129\n" +
+	"\x06Delete\x12\x17.main.api.chatpb.ChatId\x1a\x16.google.protobuf.Empty\x12F\n" +
+	"\fSendMessages\x12\x1c.main.api.chatpb.ChatMessage\x1a\x16.google.protobuf.Empty(\x01\x12F\n" +
+	"\vGetMessages\x12\x17.main.api.chatpb.ChatId\x1a\x1c.main.api.chatpb.ChatMessage0\x01B\x11Z\x0fmain/api/chatpbb\x06proto3"
 
 var (
 	file_chat_proto_rawDescOnce sync.Once
@@ -296,29 +306,32 @@ func file_chat_proto_rawDescGZIP() []byte {
 
 var file_chat_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_chat_proto_goTypes = []any{
-	(*CreateChatResponse)(nil),    // 0: main.api.chat.CreateChatResponse
-	(*CreateChatRequest)(nil),     // 1: main.api.chat.CreateChatRequest
-	(*ChatMessage)(nil),           // 2: main.api.chat.ChatMessage
-	(*Username)(nil),              // 3: main.api.chat.Username
-	(*ChatId)(nil),                // 4: main.api.chat.ChatId
+	(*CreateChatResponse)(nil),    // 0: main.api.chatpb.CreateChatResponse
+	(*CreateChatRequest)(nil),     // 1: main.api.chatpb.CreateChatRequest
+	(*ChatMessage)(nil),           // 2: main.api.chatpb.ChatMessage
+	(*Username)(nil),              // 3: main.api.chatpb.Username
+	(*ChatId)(nil),                // 4: main.api.chatpb.ChatId
 	(*timestamppb.Timestamp)(nil), // 5: google.protobuf.Timestamp
 	(*emptypb.Empty)(nil),         // 6: google.protobuf.Empty
 }
 var file_chat_proto_depIdxs = []int32{
-	4, // 0: main.api.chat.CreateChatResponse.id:type_name -> main.api.chat.ChatId
-	3, // 1: main.api.chat.CreateChatRequest.usernames:type_name -> main.api.chat.Username
-	5, // 2: main.api.chat.ChatMessage.timestamp:type_name -> google.protobuf.Timestamp
-	1, // 3: main.api.chat.Chat.Create:input_type -> main.api.chat.CreateChatRequest
-	4, // 4: main.api.chat.Chat.Delete:input_type -> main.api.chat.ChatId
-	2, // 5: main.api.chat.Chat.SendMessage:input_type -> main.api.chat.ChatMessage
-	0, // 6: main.api.chat.Chat.Create:output_type -> main.api.chat.CreateChatResponse
-	6, // 7: main.api.chat.Chat.Delete:output_type -> google.protobuf.Empty
-	6, // 8: main.api.chat.Chat.SendMessage:output_type -> google.protobuf.Empty
-	6, // [6:9] is the sub-list for method output_type
-	3, // [3:6] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	4, // 0: main.api.chatpb.CreateChatResponse.id:type_name -> main.api.chatpb.ChatId
+	3, // 1: main.api.chatpb.CreateChatRequest.usernames:type_name -> main.api.chatpb.Username
+	4, // 2: main.api.chatpb.ChatMessage.id:type_name -> main.api.chatpb.ChatId
+	5, // 3: main.api.chatpb.ChatMessage.timestamp:type_name -> google.protobuf.Timestamp
+	1, // 4: main.api.chatpb.Chat.Create:input_type -> main.api.chatpb.CreateChatRequest
+	4, // 5: main.api.chatpb.Chat.Delete:input_type -> main.api.chatpb.ChatId
+	2, // 6: main.api.chatpb.Chat.SendMessages:input_type -> main.api.chatpb.ChatMessage
+	4, // 7: main.api.chatpb.Chat.GetMessages:input_type -> main.api.chatpb.ChatId
+	0, // 8: main.api.chatpb.Chat.Create:output_type -> main.api.chatpb.CreateChatResponse
+	6, // 9: main.api.chatpb.Chat.Delete:output_type -> google.protobuf.Empty
+	6, // 10: main.api.chatpb.Chat.SendMessages:output_type -> google.protobuf.Empty
+	2, // 11: main.api.chatpb.Chat.GetMessages:output_type -> main.api.chatpb.ChatMessage
+	8, // [8:12] is the sub-list for method output_type
+	4, // [4:8] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_chat_proto_init() }

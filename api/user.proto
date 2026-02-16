@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package main.api.user;
+package main.api.userpb;
 
-option go_package = "main/api/user";
+option go_package = "main/api/userpb";
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";

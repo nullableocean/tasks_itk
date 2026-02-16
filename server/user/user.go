@@ -8,7 +8,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	userpb "main/api/user"
+	"main/api/userpb"
 
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -35,9 +35,10 @@ type User struct {
 type UserServer struct {
 	userpb.UnimplementedUserServer
 
-	store map[int64]*User
-	count atomic.Int64
-	mu    sync.RWMutex
+	store  map[int64]*User
+	nextId atomic.Int64
+
+	mu sync.RWMutex
 }
 
 func NewUserServer() *UserServer {
@@ -54,7 +55,7 @@ func (us *UserServer) Create(ctx context.Context, req *userpb.CreateUserRequest)
 	us.mu.Lock()
 	defer us.mu.Unlock()
 
-	id := us.count.Add(1)
+	id := us.nextId.Add(1)
 	timestamp := time.Now()
 
 	us.store[id] = &User{
