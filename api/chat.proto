@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package main.api.chat;
+
+option go_package = "main/api/chat";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+service Chat {
+    rpc Create(CreateChatRequest) returns (CreateChatResponse);
+    rpc Delete(ChatId) returns (google.protobuf.Empty);
+    rpc SendMessage(ChatMessage) returns (google.protobuf.Empty);
+}
+
+
+
+message CreateChatResponse {
+    ChatId id = 1;
+}
+
+message CreateChatRequest {
+    repeated Username usernames = 1; 
+}
+
+message ChatMessage {
+    string from = 1;
+    string text = 2;
+    google.protobuf.Timestamp timestamp = 3; 
+}
+
+message Username {
+    string username = 1;
+}
+
+message ChatId {
+    int64 id = 1;
+}
